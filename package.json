@@ -1,0 +1,38 @@
+{
+  "name": "process-monitor",
+  "version": "1.0.0",
+  "description": "Real-time process monitor. CPU, memory, threads for any PID. Zero dependencies.",
+  "type": "module",
+  "bin": {
+    "process-monitor": "./index.js",
+    "pmon": "./index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "developer-tools",
+    "cli",
+    "nodejs",
+    "zero-dependencies",
+    "monitoring",
+    "processes",
+    "cpu",
+    "memory",
+    "tui",
+    "htop"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NickCirv/process-monitor.git"
+  },
+  "homepage": "https://github.com/NickCirv/process-monitor#readme",
+  "bugs": {
+    "url": "https://github.com/NickCirv/process-monitor/issues"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ]
+}
