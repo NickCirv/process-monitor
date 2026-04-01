@@ -1,3 +1,5 @@
+![Banner](banner.svg)
+
 # process-monitor
 
 Real-time process CPU/memory monitor TUI for macOS and Linux. A lightweight htop alternative built with zero npm dependencies — pure Node.js built-ins only.
