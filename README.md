@@ -1,51 +1,62 @@
-<div align="center">
+![process-monitor — Nicholas Ashkar editorial artwork](assets/nicholas-ashkar/banner.png)
 
 # process-monitor
 
-**Real-time process CPU/memory TUI — a zero-dependency htop alternative for macOS and Linux**
+Inspect process CPU and memory data in a terminal or a JSON snapshot.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue?labelColor=0B0A09)](LICENSE)
-[![Zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?labelColor=0B0A09)](package.json)
-[![Node >=18](https://img.shields.io/badge/node-%3E%3D18-blue?labelColor=0B0A09)](package.json)
+Provides PID/name filtering, sorting, a live TUI, threshold alerts and optional CSV logging. macOS uses system tools; Linux also reads proc data.
 
-</div>
 
-## Install
+<a id="install"></a>
+
+## Quickstart
+
+Package runtime requirement: Node.js `>=20`. Git is needed to obtain this pinned source checkout.
 
 ```bash
-npx github:NickCirv/process-monitor
+git clone https://github.com/NickCirv/process-monitor.git
+cd process-monitor
+git checkout ce7361d99ebe70631787c95712effd1aa83756a7
+node index.js --json --limit 10
 ```
+
+This source-derived example has not been executed in this review. The command emits a one-time process/system snapshot and exits. Values depend on the host.
+
+
+<a id="what-it-does"></a>
 
 ## Usage
 
 ```bash
-# Interactive TUI — all processes
-npx github:NickCirv/process-monitor
-
-# Short alias after global install
-npm install -g github:NickCirv/process-monitor
-pmon --sort mem --limit 20
-pmon --watch "npm run dev"
-pmon --json --limit 10
+node index.js --name node --sort mem --limit 10
+node index.js --pid 12345 --interval 1000
+node index.js --log metrics.csv
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--pid <n>` | Monitor a specific process by PID |
-| `--name <pattern>` | Filter by name pattern |
-| `--watch <command>` | Run command and monitor its PID |
-| `--sort cpu\|mem\|pid\|name` | Sort column (default: `cpu`) |
-| `--limit <n>` | Show top N processes |
-| `--interval <ms>` | Refresh interval (default: `1000`) |
-| `--json` | Output a JSON snapshot and exit |
-| `--log <file>` | Stream metrics to a CSV file |
-| `--alert-cpu <pct>` | Print alert when CPU exceeds % |
-| `--alert-mem <mb>` | Print alert when RSS exceeds MB |
+`--watch <command>` launches a command and monitors it. In the TUI, `k` sends SIGTERM and `K` sends SIGKILL to the selected process.
 
-## What it does
+[Command reference](docs/REFERENCE.md) covers arguments, modes and output controls.
 
-Renders a live-updating terminal table of running processes with per-process CPU%, memory%, RSS, VSZ, status, and a 10-char sparkline of CPU history. A system header shows aggregate CPU, RAM usage, uptime, and load averages. Processes can be sorted, filtered by name, navigated with arrow keys, and killed with `k` / `K`. Works on macOS (`ps aux` + `top -l 1`) and Linux (`ps aux` + `/proc/stat`).
+## Behavior and limits
 
----
+This is not a passive-only interface: watch mode starts processes, log mode writes files and kill keys send signals. CPU/RSS readings have platform-specific semantics and are not a profiling trace. Process command lines and logs may contain local details. The captured tree lacks a LICENSE file despite MIT package metadata.
 
-<sub>Zero dependencies · Node >=18 · MIT · by <a href="https://github.com/NickCirv">NickCirv</a></sub>
+## Development
+
+Declared package scripts:
+
+| Script | Command |
+| --- | --- |
+| `test` | `node --test` |
+
+The smoke test syntax-checks the entrypoint; it does not exercise CLI behavior or integrations.
+
+## Research
+
+[Source review and claim ledger](docs/RESEARCH.md) records revision `ce7361d99ebe`, inspected files and verification gaps.
+
+## License and attribution
+
+No license file was captured at this revision. A package metadata license field does not supply missing license text; confirm reuse terms before redistribution.
+
+[Artwork credits](assets/nicholas-ashkar/CREDITS.md) · [Nicholas Ashkar — consulting](https://nicholashkar.com/#oxblood-contact)
